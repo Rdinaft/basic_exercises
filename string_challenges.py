@@ -15,7 +15,7 @@ word = 'Архангельск'
 
 count = 0
 for letters in word.upper():
-    if letters in 'А, О, У, Ы, Э, Е, Ё, И, Ю, Я':
+    if letters in 'АОУЫЭЕЁИЮЯ':
         count += 1
 print(count)
 
@@ -29,12 +29,12 @@ print(len(sentence.split()))
 # Вывести первую букву каждого слова на отдельной строке
 sentence = 'Мы приехали в гости'
 
-for words in sentence.split():
-    print(words[0])
+for letters in sentence.split():
+    print(letters[0])
 
 
 # Вывести усреднённую длину слова в предложении
 sentence = 'Мы приехали в гости'
 
-avg = len(sentence.replace(' ', '')) / len(sentence.split())
-print(avg)
+avg_word_length = len(sentence.replace(' ', '')) / len(sentence.split())
+print(avg_word_length)
