@@ -12,7 +12,17 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-# ???
+
+names = {}
+
+for name in students:
+    if name['first_name'] in names:
+        names[name['first_name']] += 1
+    else:
+        names[name['first_name']] = 1
+for name in names:
+    print(f'{name}: {names.get(name)}')
+
 
 
 # Задание 2
@@ -26,7 +36,16 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
-# ???
+
+names = {}
+
+for name in students:
+    if name['first_name'] in names:
+        names[name['first_name']] += 1
+    else:
+        names[name['first_name']] = 1
+names = sorted(names.items(), key=lambda name: name[1], reverse=True)
+print(f'Самое частое имя среди учеников: {next(iter(names[0]))}')
 
 
 # Задание 3
@@ -51,7 +70,6 @@ school_students = [
         {'first_name': 'Саша'},
     ],
 ]
-# ???
 
 
 # Задание 4
