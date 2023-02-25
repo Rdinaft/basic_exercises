@@ -4,7 +4,7 @@
 # Вася: 1
 # Маша: 2
 # Петя: 2
-
+'''
 students = [
     {'first_name': 'Вася'},
     {'first_name': 'Петя'},
@@ -22,13 +22,14 @@ for name in students:
         names[name['first_name']] = 1
 for name in names:
     print(f'{name}: {names.get(name)}')
-
+'''
 
 
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
 # Пример вывода:
 # Самое частое имя среди учеников: Маша
+'''
 students = [
     {'first_name': 'Вася'},
     {'first_name': 'Петя'},
@@ -44,9 +45,9 @@ for name in students:
         names[name['first_name']] += 1
     else:
         names[name['first_name']] = 1
-names = sorted(names.items(), key=lambda name: name[1], reverse=True)
-print(f'Самое частое имя среди учеников: {next(iter(names[0]))}')
-
+names = list(sorted(names.items(), key=lambda name: name[1], reverse=True))
+print(f'Самое частое имя среди учеников: {names[0][0]}')
+'''
 
 # Задание 3
 # Есть список учеников в нескольких классах, нужно вывести самое частое имя в каждом классе.
@@ -71,6 +72,22 @@ school_students = [
     ],
 ]
 
+'''
+school = []
+
+for name_in_school in school_students:
+    names = {}
+    for name_in_class in name_in_school:
+        if name_in_class['first_name'] in names:
+            names[name_in_class['first_name']] += 1
+        else:
+            names[name_in_class['first_name']] = 1
+    names = sorted(names.items(), key=lambda name_in_class: name_in_class[1], reverse=True)
+    school.append(names)
+
+for number, names in enumerate(school, 1):
+    print(f'Самое частое имя в классе {number}: {names[0][0]}.')
+'''
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
@@ -90,7 +107,9 @@ is_male = {
     'Миша': True,
     'Даша': False,
 }
-# ???
+
+
+
 
 
 # Задание 5
