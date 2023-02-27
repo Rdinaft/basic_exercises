@@ -4,7 +4,7 @@
 # Вася: 1
 # Маша: 2
 # Петя: 2
-'''
+
 students = [
     {'first_name': 'Вася'},
     {'first_name': 'Петя'},
@@ -22,14 +22,14 @@ for name in students:
         names[name['first_name']] = 1
 for name in names:
     print(f'{name}: {names.get(name)}')
-'''
+
 
 
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
 # Пример вывода:
 # Самое частое имя среди учеников: Маша
-'''
+
 students = [
     {'first_name': 'Вася'},
     {'first_name': 'Петя'},
@@ -47,7 +47,7 @@ for name in students:
         names[name['first_name']] = 1
 names = list(sorted(names.items(), key=lambda name: name[1], reverse=True))
 print(f'Самое частое имя среди учеников: {names[0][0]}')
-'''
+
 
 # Задание 3
 # Есть список учеников в нескольких классах, нужно вывести самое частое имя в каждом классе.
@@ -72,22 +72,19 @@ school_students = [
     ],
 ]
 
-'''
-school = []
-
-for name_in_school in school_students:
+most_popular_names = []
+for classes in school_students:
     names = {}
-    for name_in_class in name_in_school:
+    for name_in_class in classes:
         if name_in_class['first_name'] in names:
             names[name_in_class['first_name']] += 1
         else:
             names[name_in_class['first_name']] = 1
     names = sorted(names.items(), key=lambda name_in_class: name_in_class[1], reverse=True)
-    school.append(names)
+    most_popular_names.append(names[0])
 
-for number, names in enumerate(school, 1):
-    print(f'Самое частое имя в классе {number}: {names[0][0]}.')
-'''
+for number, names in enumerate(most_popular_names, 1):
+    print(f'Самое частое имя в классе {number}: {names[0]}.')
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
@@ -108,7 +105,20 @@ is_male = {
     'Даша': False,
 }
 
-
+for classes in school:
+    school_students = []
+    male_students = []
+    female_students = []
+    for student in classes['students']:
+        school_students.append(student['first_name'])
+    for student in school_students:
+        gender = is_male.get(student)
+        if gender:
+            male_students.append(student)
+        else:
+            female_students.append(student)
+    class_name = classes['class']
+    print(f'Класс {class_name}: девочки {len(female_students)}, мальчики {len(male_students)}')
 
 
 
@@ -128,5 +138,26 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-# ???
+
+'''
+for classes in school:
+    school_students = []
+    male_students = []
+    female_students = []
+    class_name = classes['class']
+    for student in classes['students']:
+        school_students.append(student['first_name'])
+    for student in school_students:
+        gender = is_male.get(student)
+        if gender:
+            male_students.append(student)
+        else:
+            female_students.append(student)
+
+
+    #if len(male_students) > len(male_students):
+        #print('мальчиков больше')
+    #else:
+        #print('девочек больше')
+'''
 
