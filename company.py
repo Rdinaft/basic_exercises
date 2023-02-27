@@ -7,6 +7,14 @@
 4. Вывести имена всех сотрудников компании, которые получают больше 100к.
 5. Вывести позиции, на которых люди получают меньше 80к (можно с повторениями).
 6. Посчитать, сколько денег в месяц уходит на каждый отдел – и вывести вместе с названием отдела
+
+Второй уровень:
+7. Вывести названия отделов с указанием минимальной зарплаты в нём.
+8. Вывести названия отделов с указанием минимальной, средней и максимальной зарплаты в нём.
+9. Вывести среднюю зарплату по всей компании.
+10. Вывести названия должностей, которые получают больше 90к без повторений.
+11. Посчитать среднюю зарплату по каждому отделу среди девушек (их зовут Мишель, Николь, Кристина и Кейтлин).
+12. Вывести без повторений имена людей, чьи фамилии заканчиваются на гласную букву.
 """
 
 departments = [
@@ -30,6 +38,72 @@ departments = [
     },
 ]
 
+
+for department in departments:  # 7
+    salary = []
+    for worker in department['employers']:
+        salary.append(worker['salary_rub'])
+    salary.sort()
+    name_of_department = department['title']
+    print(f'Минимальная зарплата в {name_of_department}: {salary[0]}')
+
+
+for department in departments:  # 8
+    salary = []
+    for worker in department['employers']:
+        salary.append(worker['salary_rub'])
+    salary.sort()
+    name_of_department = department['title']
+    avg_salary = sum(salary) / len(salary)
+    print(f'Минимальная зарплата в {name_of_department}: {salary[0]}')
+    print(f'Средняя зарплата в {name_of_department}: {avg_salary}')
+    print(f'Максимальная зарплата в {name_of_department}: {salary[-1]}')
+
+    
+salary_of_company = []  # 9
+for department in departments:  
+    for worker in department['employers']:
+        salary_of_company.append(worker['salary_rub'])
+avg_salary = sum(salary_of_company) / len(salary_of_company)
+print(f'Средняя зарплата в кампании: {avg_salary}')
+
+
+salary_more_90 = []  # 10
+for department in departments:  
+    for worker in department['employers']:
+        if worker['salary_rub'] > 90000:
+            salary_more_90.append(worker['position'])
+for position in salary_more_90:
+    if salary_more_90.count(position) > 1:
+        salary_more_90.remove(position)
+salary_more_90 = list(set(salary_more_90))
+output = ', '.join(salary_more_90)
+print(f'Получают больше 90к: {output}.')
+
+
+women_names = ['Michelle', 'Nicole', 'Christina', 'Caitlin']  # 11
+women_salary = []  
+for department in departments:  
+    for worker in department['employers']:
+        if worker['first_name'] in women_names:
+            women_salary.append(worker['salary_rub'])
+    avg_salary = int(sum(women_salary) / len(women_salary))
+    name_of_department = department['title']
+    print(f'Средняя зп девушек в {name_of_department}: {avg_salary}')
+
+
+sorted_by_letters = []  # 12
+for department in departments:  
+    for worker in department['employers']:
+        if worker['first_name'][-1] in 'aeiou':
+            sorted_by_letters.append(worker['first_name'])
+for name in sorted_by_letters:
+    if sorted_by_letters.count(name) > 1:
+        sorted_by_letters.remove(name)
+output = ', '.join(sorted_by_letters)
+print(f'Имена людей с окончанием на гласную букву: {output}.')
+
+'''
 for department in departments:  # 1
     print(department['title'])
 
@@ -61,3 +135,4 @@ for department in departments:  # 6
     for worker in department['employers']:
         sum_waste += worker['salary_rub']
     print(department['title'], sum_waste)
+'''
