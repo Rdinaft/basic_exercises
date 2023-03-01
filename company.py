@@ -60,11 +60,11 @@ for department in departments:  # 8
     print(f'Максимальная зарплата в {name_of_department}: {salary[-1]}')
 
     
-salary_of_company = []  # 9
+most_paid_positions = []  # 9
 for department in departments:  
     for worker in department['employers']:
-        salary_of_company.append(worker['salary_rub'])
-avg_salary = sum(salary_of_company) / len(salary_of_company)
+        most_paid_positions.append(worker['salary_rub'])
+avg_salary = sum(most_paid_positions) / len(most_paid_positions)
 print(f'Средняя зарплата в кампании: {avg_salary}')
 
 
@@ -89,12 +89,12 @@ for department in departments:
     print(f'Средняя зп девушек в {name_of_department}: {avg_salary}')
 
 
-sorted_by_last_vovel = []  # 12
+names_with_last_vovel = []  # 12
 for department in departments:  
     for worker in department['employers']:
         if worker['first_name'][-1] in 'aeiou':
-            sorted_by_last_vovel.append(worker['first_name'])
-sorted_by_last_vovel = list(set(sorted_by_last_vovel))
+            names_with_last_vovel.append(worker['first_name'])
+sorted_by_last_vovel = list(set(names_with_last_vovel))
 output = ', '.join(sorted_by_last_vovel)
 print(f'Имена людей с окончанием на гласную букву: {output}.')
 
