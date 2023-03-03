@@ -72,19 +72,18 @@ school_students = [
     ],
 ]
 
+
 most_popular_names = []
 for classes in school_students:
     names = {}
     for name_in_class in classes:
-        if name_in_class['first_name'] in names:
-            names[name_in_class['first_name']] += 1
-        else:
-            names[name_in_class['first_name']] = 1
+        names[name_in_class['first_name']] = names.get(name_in_class['first_name'], 0) + 1
     names = sorted(names.items(), key=lambda name_in_class: name_in_class[1], reverse=True)
     most_popular_names.append(names[0])
 
 for number, names in enumerate(most_popular_names, 1):
     print(f'Самое частое имя в классе {number}: {names[0]}.')
+
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
@@ -107,19 +106,18 @@ is_male = {
 
 for classes in school:
     school_students = []
-    male_students = []
-    female_students = []
+    male_students = int()
+    female_students = int()
     for student in classes['students']:
         school_students.append(student['first_name'])
     for student in school_students:
-        gender = is_male.get(student)
+        gender = is_male[student]
         if gender:
-            male_students.append(student)
+            male_students += 1
         else:
-            female_students.append(student)
+            female_students += 1
     class_name = classes['class']
-    print(f'Класс {class_name}: девочки {len(female_students)}, мальчики {len(male_students)}')
-
+    print(f'Класс {class_name}: девочки {female_students}, мальчики {male_students}')
 
 
 # Задание 5
@@ -131,6 +129,9 @@ for classes in school:
 school = [
     {'class': '2a', 'students': [{'first_name': 'Маша'}, {'first_name': 'Оля'}]},
     {'class': '3c', 'students': [{'first_name': 'Олег'}, {'first_name': 'Миша'}]},
+    {'class': '4d', 'students': [{'first_name': 'Олег'}, {'first_name': 'Миша'}, {'first_name': 'Маша'}]},
+    {'class': '5e', 'students': [{'first_name': 'Олег'}, {'first_name': 'Миша'}, {'first_name': 'Маша'}, {'first_name': 'Миша'}, {'first_name': 'Миша'}]},
+    {'class': '6f', 'students': [{'first_name': 'Маша'}, {'first_name': 'Оля'}, {'first_name': 'Оля'}]},
 ]
 is_male = {
     'Маша': False,
@@ -139,25 +140,24 @@ is_male = {
     'Миша': True,
 }
 
-'''
+overall_boys = {}
+overall_girls = {}
 for classes in school:
     school_students = []
-    male_students = []
-    female_students = []
-    class_name = classes['class']
+    male_students = {}
+    female_students = {}
     for student in classes['students']:
         school_students.append(student['first_name'])
     for student in school_students:
-        gender = is_male.get(student)
-        if gender:
-            male_students.append(student)
+        if is_male[student]:
+            male_students[classes['class']] = male_students.get(classes['class'], 0) + 1
+            female_students[classes['class']] = female_students.get(classes['class'], 0)
         else:
-            female_students.append(student)
-
-
-    #if len(male_students) > len(male_students):
-        #print('мальчиков больше')
-    #else:
-        #print('девочек больше')
-'''
-
+            female_students[classes['class']] = female_students.get(classes['class'], 0) + 1
+            male_students[classes['class']] = male_students.get(classes['class'], 0)
+    overall_boys.update(male_students)
+    overall_girls.update(female_students)
+max_boys = max(overall_boys, key=overall_boys.get)
+max_girls = max(overall_girls, key=overall_girls.get)
+print(f'Больше всего мальчиков в классе {max_boys}.')
+print(f'Больше всего девочек в классе {max_girls}.')
