@@ -78,11 +78,10 @@ for classes in school_students:
     names = {}
     for name_in_class in classes:
         names[name_in_class['first_name']] = names.get(name_in_class['first_name'], 0) + 1
-    names = sorted(names.items(), key=lambda name_in_class: name_in_class[1], reverse=True)
-    most_popular_names.append(names[0])
-
+    names = max(names, key=names.get)
+    most_popular_names.append(names)
 for number, names in enumerate(most_popular_names, 1):
-    print(f'Самое частое имя в классе {number}: {names[0]}.')
+    print(f'Самое частое имя в классе {number}: {names}.')
 
 
 # Задание 4
@@ -106,8 +105,8 @@ is_male = {
 
 for classes in school:
     school_students = []
-    male_students = int()
-    female_students = int()
+    male_students = 0
+    female_students = 0
     for student in classes['students']:
         school_students.append(student['first_name'])
     for student in school_students:
@@ -151,10 +150,8 @@ for classes in school:
     for student in school_students:
         if is_male[student]:
             male_students[classes['class']] = male_students.get(classes['class'], 0) + 1
-            female_students[classes['class']] = female_students.get(classes['class'], 0)
         else:
             female_students[classes['class']] = female_students.get(classes['class'], 0) + 1
-            male_students[classes['class']] = male_students.get(classes['class'], 0)
     overall_boys.update(male_students)
     overall_girls.update(female_students)
 max_boys = max(overall_boys, key=overall_boys.get)

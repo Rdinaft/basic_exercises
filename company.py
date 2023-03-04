@@ -25,7 +25,7 @@ departments = [
             {"first_name": "Michelle", "last_name": "Frey", "position": "Middle HR", "salary_rub": 75000},
             {"first_name": "Kevin", "last_name": "Jimenez", "position": "Middle HR", "salary_rub": 70000},
             {"first_name": "Nicole", "last_name": "Riley", "position": "HRD", "salary_rub": 120000},
-        ]
+        ],
     },
     {
         "title": "IT department",
@@ -34,7 +34,7 @@ departments = [
             {"first_name": "Michelle", "last_name": "Gilbert", "position": "JS dev", "salary_rub": 85000},
             {"first_name": "Caitlin", "last_name": "Bradley", "position": "Teamlead", "salary_rub": 950000},
             {"first_name": "Brian", "last_name": "Hartman", "position": "CTO", "salary_rub": 130000},
-        ]
+        ],
     },
 ]
 
@@ -52,19 +52,18 @@ for department in departments:  # 8
     salary = []
     for worker in department['employers']:
         salary.append(worker['salary_rub'])
-    salary.sort()
     name_of_department = department['title']
     avg_salary = sum(salary) / len(salary)
-    print(f'Минимальная зарплата в {name_of_department}: {salary[0]}')
+    print(f'Минимальная зарплата в {name_of_department}: {min(salary)}')
     print(f'Средняя зарплата в {name_of_department}: {avg_salary}')
-    print(f'Максимальная зарплата в {name_of_department}: {salary[-1]}')
+    print(f'Максимальная зарплата в {name_of_department}: {max(salary)}')
 
     
-most_paid_positions = []  # 9
+all_company_salary = []  # 9
 for department in departments:  
     for worker in department['employers']:
-        most_paid_positions.append(worker['salary_rub'])
-avg_salary = sum(most_paid_positions) / len(most_paid_positions)
+        all_company_salary.append(worker['salary_rub'])
+avg_salary = sum(all_company_salary) / len(all_company_salary)
 print(f'Средняя зарплата в кампании: {avg_salary}')
 
 
@@ -94,9 +93,9 @@ for department in departments:
     for worker in department['employers']:
         if worker['first_name'][-1] in 'aeiou':
             names_with_last_vovel.append(worker['first_name'])
-sorted_by_last_vovel = list(set(names_with_last_vovel))
-output = ', '.join(sorted_by_last_vovel)
-print(f'Имена людей с окончанием на гласную букву: {output}.')
+names_with_last_vovel_wo_repeat = list(set(names_with_last_vovel))
+names_with_last_vovel_wo_repeat = ', '.join(names_with_last_vovel_wo_repeat)
+print(f'Имена людей с окончанием на гласную букву: {names_with_last_vovel_wo_repeat}.')
 
 """
 for department in departments:  # 1
