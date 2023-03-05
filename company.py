@@ -38,14 +38,13 @@ departments = [
     },
 ]
 
-
+'''
 for department in departments:  # 7
     salary = []
     for worker in department['employers']:
         salary.append(worker['salary_rub'])
-    salary.sort()
     name_of_department = department['title']
-    print(f'Минимальная зарплата в {name_of_department}: {salary[0]}')
+    print(f'Минимальная зарплата в {name_of_department}: {min(salary)}')
 
 
 for department in departments:  # 8
@@ -86,14 +85,14 @@ for department in departments:
     avg_salary = int(sum(women_salary) / len(women_salary))
     name_of_department = department['title']
     print(f'Средняя зп девушек в {name_of_department}: {avg_salary}')
+'''
 
-
-names_with_last_vovel = []  # 12
+last_names_with_last_vovel = []  # 12
 for department in departments:  
     for worker in department['employers']:
-        if worker['first_name'][-1] in 'aeiou':
-            names_with_last_vovel.append(worker['first_name'])
-names_with_last_vovel_wo_repeat = list(set(names_with_last_vovel))
+        if worker['last_name'][-1] in 'aeioyu':
+            last_names_with_last_vovel.append(worker['first_name'])
+names_with_last_vovel_wo_repeat = list(set(last_names_with_last_vovel))
 names_with_last_vovel_wo_repeat = ', '.join(names_with_last_vovel_wo_repeat)
 print(f'Имена людей с окончанием на гласную букву: {names_with_last_vovel_wo_repeat}.')
 
