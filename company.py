@@ -112,7 +112,7 @@ for tax in taxes:
         departments_taxes[tax["department"]] += tax.get("value_percents")
     elif tax["department"] is None:
         for department["title"] in departments_taxes:
-            departments_taxes[department["title"]] += tax.get("value_percents"  )
+            departments_taxes[department["title"]] += tax.get("value_percents")
 
 department_salary_with_tax = {}
 
