@@ -339,9 +339,3 @@ for department in departments:  # 6
     for worker in department["employers"]:
         sum_waste += worker["salary_rub"]
     print(department["title"], sum_waste)"""
-
-"""выбрать движок
-запуситить демку локально
-изучить документацию движка
-потестить на демках код
-доклад небольшой по возможностям движка"""
