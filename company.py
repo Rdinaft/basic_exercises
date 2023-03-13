@@ -147,16 +147,14 @@ for department in departments:
                 departments_taxes[department["title"]] += tax.get("value_percents")
 
     for worker in department["employers"]:
-        worker_with_salary = {}
-        worker_with_salary[worker["last_name"]] = worker.get("salary_rub") - (
-            worker.get("salary_rub") * departments_taxes.get(department["title"]) / 100
+        worker_salary_clean = worker.get("salary_rub") - (
+            worker.get("salary_rub") * departments_taxes.get(department["title"]) // 100
         )
-        worker_with_salary = list(worker_with_salary.items())[0]
         print(
             "Зарплата {} {}: {} руб. с вычетом налогов, с учетом налогов: {} руб.".format(
                 worker["first_name"],
-                worker_with_salary[0],
-                worker_with_salary[1],
+                worker["last_name"],
+                worker_salary_clean,
                 worker["salary_rub"],
             )
         )
@@ -214,17 +212,20 @@ for department in departments:
                 departments_taxes[department["title"]] += tax.get("value_percents")
 
     for worker in department["employers"]:
-        worker_tax = []
-        worker_tax.append(
-            worker.get("salary_rub") * departments_taxes.get(department["title"]) / 100
-        )
-        if worker_tax[0] * 12 > 100000:
+        if (
+            worker.get("salary_rub")
+            * departments_taxes.get(department["title"])
+            / 100
+            * 12
+            > 100000
+        ):
             print(worker.get("first_name"), worker.get("last_name"))
 
 
 # 18 Вывести имя и фамилию сотрудника, за которого компания платит меньше всего налогов.
 worker_tax = []
-names_surnames = []
+workers_surnames = []
+workers_names = []
 for department in departments:
     departments_taxes = {}
     departments_taxes[department["title"]] = 0
@@ -237,15 +238,13 @@ for department in departments:
                 departments_taxes[department["title"]] += tax.get("value_percents")
 
     for worker in department["employers"]:
-        workers_surnames = []
-        workers_names = []
         worker_tax.append(
             worker.get("salary_rub") * departments_taxes.get(department["title"]) / 100
         )
         workers_names.append(worker.get("first_name"))
         workers_surnames.append(worker.get("last_name"))
-        names_surnames.append(list(zip(workers_names, workers_surnames)))
-worker_with_min_tax = " ".join(names_surnames[worker_tax.index(min(worker_tax))][0])
+names_surnames = list(zip(workers_names, workers_surnames))
+worker_with_min_tax = " ".join(names_surnames[worker_tax.index(min(worker_tax))])
 print(
     f"Сотрудник, за которого компания платит меньше всего налогов - {worker_with_min_tax}."
 )
@@ -340,3 +339,9 @@ for department in departments:  # 6
     for worker in department["employers"]:
         sum_waste += worker["salary_rub"]
     print(department["title"], sum_waste)"""
+
+"""выбрать движок
+запуситить демку локально
+изучить документацию движка
+потестить на демках код
+доклад небольшой по возможностям движка"""
