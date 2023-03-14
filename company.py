@@ -115,8 +115,7 @@ for department in departments:
         if tax["department"] in departments_taxes:
             departments_taxes[tax["department"]] += tax.get("value_percents")
         elif tax["department"] is None:
-            for department["title"] in departments_taxes:
-                departments_taxes[department["title"]] += tax.get("value_percents")
+            departments_taxes[department["title"]] += tax.get("value_percents")
 
     for department["title"] in departments_taxes:
         department_salary_with_tax[department["title"]] = 0
@@ -126,12 +125,12 @@ for department in departments:
                 * departments_taxes.get(department["title"])
                 / 100
             )
-    for department["title"] in department_salary_with_tax:
-        print(
-            "Суммарный налог на {}: {} руб.".format(
-                department["title"], department_salary_with_tax.get(department["title"])
-            )
+for department["title"] in department_salary_with_tax:
+    print(
+        "Суммарный налог на {}: {} руб.".format(
+            department["title"], department_salary_with_tax.get(department["title"])
         )
+    )
 
 
 # 14 Вывести список всех сотрудников с указанием зарплаты "на руки" и зарплаты с учётом налогов.
@@ -151,12 +150,7 @@ for department in departments:
             worker.get("salary_rub") * departments_taxes.get(department["title"]) // 100
         )
         print(
-            "Зарплата {} {}: {} руб. с вычетом налогов, с учетом налогов: {} руб.".format(
-                worker["first_name"],
-                worker["last_name"],
-                worker_salary_clean,
-                worker["salary_rub"],
-            )
+            f"Зарплата {worker['first_name']} {worker['last_name']}: {worker_salary_clean} руб. с вычетом налогов, с учетом налогов: {worker['salary_rub']} руб."
         )
 
 # 16 Вывести список отделов, отсортированный по месячной налоговой нагрузки.
@@ -190,8 +184,8 @@ for department["title"] in departments_taxes:
         )
 
 list_of_departments_sorted_by_tax = []
-department_salary_with_tax = list(
-    sorted(department_salary_with_tax.items(), key=operator.itemgetter(1), reverse=True)
+department_salary_with_tax = sorted(
+    department_salary_with_tax.items(), key=operator.itemgetter(1), reverse=True
 )
 print("Список отделов, сортированных по убывающей месячной налоговой нагрузке:")
 for department in department_salary_with_tax:
@@ -212,20 +206,19 @@ for department in departments:
                 departments_taxes[department["title"]] += tax.get("value_percents")
 
     for worker in department["employers"]:
-        if (
+        worker_tax_per_year = (
             worker.get("salary_rub")
             * departments_taxes.get(department["title"])
             / 100
             * 12
-            > 100000
-        ):
+        )
+        if worker_tax_per_year > 100000:
             print(worker.get("first_name"), worker.get("last_name"))
 
 
 # 18 Вывести имя и фамилию сотрудника, за которого компания платит меньше всего налогов.
 worker_tax = []
-workers_surnames = []
-workers_names = []
+names_surnames = []
 for department in departments:
     departments_taxes = {}
     departments_taxes[department["title"]] = 0
@@ -241,9 +234,8 @@ for department in departments:
         worker_tax.append(
             worker.get("salary_rub") * departments_taxes.get(department["title"]) / 100
         )
-        workers_names.append(worker.get("first_name"))
-        workers_surnames.append(worker.get("last_name"))
-names_surnames = list(zip(workers_names, workers_surnames))
+        names_surnames.append((worker.get("first_name"), worker.get("last_name")))
+
 worker_with_min_tax = " ".join(names_surnames[worker_tax.index(min(worker_tax))])
 print(
     f"Сотрудник, за которого компания платит меньше всего налогов - {worker_with_min_tax}."
