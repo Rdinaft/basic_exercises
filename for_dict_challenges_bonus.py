@@ -33,6 +33,7 @@ messages = [
 import random
 import uuid
 import datetime
+from collections import Counter
 
 import lorem
 
@@ -65,6 +66,22 @@ def generate_chat_history():
         })
     return messages
 
+# 1. Вывести айди пользователя, который написал больше всех сообщений.
+def most_talkative_person():
+    users_id = []
+    for message in generate_chat_history():
+        users_id.append(message['sent_by'])
+    id_with_most_posts_with_number = Counter(users_id).most_common(1)[0]
+    id_with_most_posts = id_with_most_posts_with_number[0]
+    number_of_messages_from_id = id_with_most_posts_with_number[1]
+    return f'Пользователь {id_with_most_posts} написал больше всех сообщений: {number_of_messages_from_id}.'
+
+# 2. Вывести айди пользователя, на сообщения которого больше всего отвечали.
+'''def most_responsed_id():
+    
+        print()
+    return None '''
 
 if __name__ == "__main__":
-    print(generate_chat_history())
+    print(most_talkative_person())  # 1
+    
