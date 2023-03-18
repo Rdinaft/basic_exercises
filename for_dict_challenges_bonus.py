@@ -39,7 +39,7 @@ import lorem
 
 
 def generate_chat_history():
-    messages_amount = random.randint(200, 1000)
+    messages_amount = random.randint(100, 1000)
     users_ids = list(
         {random.randint(1, 10000) for _ in range(random.randint(5, 20))}
     )
@@ -66,6 +66,7 @@ def generate_chat_history():
         })
     return messages
 
+
 # 1. Вывести айди пользователя, который написал больше всех сообщений.
 def most_talkative_person():
     users_id = []
@@ -76,12 +77,28 @@ def most_talkative_person():
     number_of_messages_from_id = id_with_most_posts_with_number[1]
     return f'Пользователь {id_with_most_posts} написал больше всех сообщений: {number_of_messages_from_id}.'
 
+
 # 2. Вывести айди пользователя, на сообщения которого больше всего отвечали.
-'''def most_responsed_id():
-    
-        print()
-    return None '''
+def most_responsed_id():
+    replies = []
+    user_id_with_message = {}
+    id_with_number_of_messages = {}
+    for message in generate_chat_history():
+        user_id_with_message[str(message['id'])] = message['sent_by']
+        if message['reply_for'] is not None:
+            replies.append(str(message['reply_for']))
+        id_with_number_of_messages[user_id_with_message.get(str(message['id']))] = 0
+
+    for message in user_id_with_message:
+        if message in replies:
+            id_with_number_of_messages[user_id_with_message.get(message)] += 1
+    id_with_most_responses = max(list(id_with_number_of_messages.items()), key=lambda i : i[1])[0]
+    return f'Пользователь с id {id_with_most_responses} получил больше всего ответов.'
+
+
+# 3. Вывести айди пользователей, сообщения которых видело больше всего уникальных пользователей.
+
 
 if __name__ == "__main__":
     print(most_talkative_person())  # 1
-    
+    print(most_responsed_id())  # 2
