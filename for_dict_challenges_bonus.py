@@ -34,12 +34,13 @@ import random
 import uuid
 import datetime
 from collections import Counter
+import operator
 
 import lorem
 
 
 def generate_chat_history():
-    messages_amount = random.randint(100, 1000)
+    messages_amount = random.randint(10, 10)
     users_ids = list(
         {random.randint(1, 10000) for _ in range(random.randint(5, 20))}
     )
@@ -67,7 +68,7 @@ def generate_chat_history():
     return messages
 
 
-# 1. Вывести айди пользователя, который написал больше всех сообщений.
+'''# 1. Вывести айди пользователя, который написал больше всех сообщений.
 def most_talkative_person():
     users_id = []
     for message in generate_chat_history():
@@ -93,12 +94,25 @@ def most_responsed_id():
         if message in replies:
             id_with_number_of_messages[user_id_with_message.get(message)] += 1
     id_with_most_responses = max(list(id_with_number_of_messages.items()), key=lambda i : i[1])[0]
-    return f'Пользователь с id {id_with_most_responses} получил больше всего ответов.'
+    return f'Пользователь с id {id_with_most_responses} получил больше всего ответов.'''
 
 
 # 3. Вывести айди пользователей, сообщения которых видело больше всего уникальных пользователей.
+def most_seen_users():
+    user_with_watched_users = {}
+    for message in generate_chat_history():
+        if message['sent_by'] not in user_with_watched_users:
+            user_with_watched_users[message['sent_by']] = message['seen_by']
+        else:
+            user_with_watched_users[message['sent_by']] += message['seen_by']
+    for users in user_with_watched_users:
+        user_with_watched_users[users] = len(list(set(user_with_watched_users[users])))
+    top_seen_users = list(dict(sorted(user_with_watched_users.items(), key=operator.itemgetter(1), reverse=True)).keys())[:3]
+    top_seen_users = ', '.join(map(str, top_seen_users))
+    return f'Пользователи, сообщения которых видело больше всего уникальных пользователей: {top_seen_users}'
 
 
 if __name__ == "__main__":
-    print(most_talkative_person())  # 1
-    print(most_responsed_id())  # 2
+    #print(most_talkative_person())  # 1
+    #print(most_responsed_id())  # 2
+    print(most_seen_users())  # 3
