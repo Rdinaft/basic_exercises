@@ -40,7 +40,7 @@ import lorem
 
 
 def generate_chat_history():
-    messages_amount = random.randint(10, 10)
+    messages_amount = random.randint(100, 1000)
     users_ids = list(
         {random.randint(1, 10000) for _ in range(random.randint(5, 20))}
     )
@@ -107,12 +107,37 @@ def most_seen_users():
             user_with_watched_users[message['sent_by']] += message['seen_by']
     for users in user_with_watched_users:
         user_with_watched_users[users] = len(list(set(user_with_watched_users[users])))
-    top_seen_users = list(dict(sorted(user_with_watched_users.items(), key=operator.itemgetter(1), reverse=True)).keys())[:3]
-    top_seen_users = ', '.join(map(str, top_seen_users))
-    return f'Пользователи, сообщения которых видело больше всего уникальных пользователей: {top_seen_users}'
+    top_seen_users = sorted(user_with_watched_users.items(), key=operator.itemgetter(1), reverse=True)
+    top_seen_user_one = top_seen_users[0][0]
+    top_seen_user_two = top_seen_users[1][0]
+    top_seen_user_three = top_seen_users[2][0]
+    return f'Пользователи, сообщения которых видело больше всего уникальных пользователей: {top_seen_user_one}, {top_seen_user_two}, {top_seen_user_three}.'
+
+# 4. Определить, когда в чате больше всего сообщений: утром (до 12 часов), днём (12-18 часов) или вечером (после 18 часов).
+def most_messages_by_time():
+    count_per_time_day = {}
+    count_per_time_day['утро'] = 0
+    count_per_time_day['день'] = 0
+    count_per_time_day['вечер'] = 0
+
+    for messages in generate_chat_history():
+        hours = datetime.datetime.timetuple(messages['sent_at'])[3]
+        if 6 <= hours < 12:
+            count_per_time_day['утро'] += 1
+        elif 12 <= hours < 18:
+            count_per_time_day['день'] += 1
+        elif 18 <= hours < 24:
+            count_per_time_day['вечер'] += 1
+    count_per_time_day_sorted = sorted(count_per_time_day.items(), key=operator.itemgetter(1), reverse=True)
+
+    return f'Больше всего сообщений в следующий период времени: {count_per_time_day_sorted[0][0]}.'
+
+# 5. Вывести идентификаторы сообщений, который стали началом для самых длинных тредов (цепочек ответов).
+
 
 
 if __name__ == "__main__":
     #print(most_talkative_person())  # 1
     #print(most_responsed_id())  # 2
     print(most_seen_users())  # 3
+    print(most_messages_by_time())  # 4
