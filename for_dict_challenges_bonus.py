@@ -68,7 +68,7 @@ def generate_chat_history():
     return messages
 
 
-'''# 1. Вывести айди пользователя, который написал больше всех сообщений.
+# 1. Вывести айди пользователя, который написал больше всех сообщений.
 def most_talkative_person():
     users_id = []
     for message in generate_chat_history():
@@ -94,7 +94,7 @@ def most_responsed_id():
         if message in replies:
             id_with_number_of_messages[user_id_with_message.get(message)] += 1
     id_with_most_responses = max(list(id_with_number_of_messages.items()), key=lambda i : i[1])[0]
-    return f'Пользователь с id {id_with_most_responses} получил больше всего ответов.'''
+    return f'Пользователь с id {id_with_most_responses} получил больше всего ответов.'
 
 
 # 3. Вывести айди пользователей, сообщения которых видело больше всего уникальных пользователей.
@@ -115,29 +115,38 @@ def most_seen_users():
 
 # 4. Определить, когда в чате больше всего сообщений: утром (до 12 часов), днём (12-18 часов) или вечером (после 18 часов).
 def most_messages_by_time():
-    count_per_time_day = {}
-    count_per_time_day['утро'] = 0
-    count_per_time_day['день'] = 0
-    count_per_time_day['вечер'] = 0
+    count_per_morning = 0
+    count_per_day = 0
+    count_per_evening = 0
 
     for messages in generate_chat_history():
         hours = datetime.datetime.timetuple(messages['sent_at'])[3]
-        if 6 <= hours < 12:
-            count_per_time_day['утро'] += 1
-        elif 12 <= hours < 18:
-            count_per_time_day['день'] += 1
-        elif 18 <= hours < 24:
-            count_per_time_day['вечер'] += 1
-    count_per_time_day_sorted = sorted(count_per_time_day.items(), key=operator.itemgetter(1), reverse=True)
+        if hours in range(6, 12):
+            count_per_morning += 1
+        elif hours in range(12, 18):
+            count_per_day += 1
+        elif hours in range(18, 24):
+           count_per_evening += 1
+    count_per_time_day_sorted = sorted([count_per_morning, count_per_day, count_per_evening], reverse=True)
 
-    return f'Больше всего сообщений в следующий период времени: {count_per_time_day_sorted[0][0]}.'
+    if count_per_time_day_sorted[0] == count_per_morning:
+        return 'Больше всего сообщений написано утром.'
+    elif count_per_time_day_sorted[0] == count_per_day:
+        return 'Больше всего сообщений написано днем.'
+    else:
+        return 'Больше всего сообщений написано вечером.'
 
 # 5. Вывести идентификаторы сообщений, который стали началом для самых длинных тредов (цепочек ответов).
-
+def most_interesting_message():
+    for messages in generate_chat_history():
+        print('')
+    
+    return None
 
 
 if __name__ == "__main__":
-    #print(most_talkative_person())  # 1
-    #print(most_responsed_id())  # 2
+    print(most_talkative_person())  # 1
+    print(most_responsed_id())  # 2
     print(most_seen_users())  # 3
     print(most_messages_by_time())  # 4
+    #most_interesting_message()
